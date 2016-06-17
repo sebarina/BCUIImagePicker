@@ -29,7 +29,7 @@ public class BCImagePickerController: UINavigationController, UIAlertViewDelegat
             
         }
     }
-    weak var imagePickerDelegate: BCImagePickerControllerDelegate?
+    public weak var imagePickerDelegate: BCImagePickerControllerDelegate?
     
     public init() {
         let albumPicker = BCAlbumPickerController()
