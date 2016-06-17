@@ -8,9 +8,6 @@ Pod::Spec.new do |s|
   s.author             = { "sebarina xu" => "sebarinaxu@gmail.com" }
 
   s.ios.deployment_target = "8.0"
-  # s.osx.deployment_target = "10.7"
-  # s.watchos.deployment_target = "2.0"
-  # s.tvos.deployment_target = "9.0"
 
   s.source       = { :git => "https://github.com/sebarina/BCUIImagePicker.git", :tag => "0.0.1" }
   s.source_files  = "source/*"

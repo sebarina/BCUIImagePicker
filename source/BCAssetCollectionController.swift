@@ -94,7 +94,7 @@ public class BCAssetCollectionController: UIViewController, UICollectionViewDele
             tempView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.3)
             tempView.tag = 101
             let icon = UIImageView(frame: CGRectMake((cellWidth - 24)/2, (cellWidth - 24)/2, 24, 24))
-            icon.image = UIImage(named: "ico_select")
+            icon.image = (navigationController as? BCImagePickerController)?.appearance.imageSelectedIcon
             tempView.addSubview(icon)
             cell.contentView.addSubview(tempView)
         }
