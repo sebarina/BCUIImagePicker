@@ -101,7 +101,11 @@ public class BCAlbumPickerController: UIViewController, UITableViewDataSource, U
         }
         
         if let asset = result.firstObject as? PHAsset {
-            cellImageView?.loadImageFromAsset(asset)
+//            cellImageView?.loadImageFromAsset(asset)
+            let scale = UIScreen.mainScreen().scale
+            PHImageManager.defaultManager().requestImageForAsset(asset, targetSize: CGSizeMake(80*scale, 80*scale), contentMode: .AspectFill , options: nil) { ( image, info) in
+                cellImageView?.image = image
+            }
             
         } else {
             cellImageView?.image = UIImage(named: "Placeholder")

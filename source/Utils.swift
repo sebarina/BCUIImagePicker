@@ -37,6 +37,7 @@ extension UIImageView {
         loadSession = PHImageManager.defaultManager().requestImageForAsset(asset, targetSize: CGSizeMake(frame.width*scale, frame.height*scale), contentMode: mode , options: nil) { [weak self]( data, info) in
             self?.image = data
             self?.loadSession = nil
+            
         }
     }
 }

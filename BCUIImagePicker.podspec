@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name         = "BCUIImagePicker"
   s.version      = "0.0.3"
-  s.summary      = "Library for images picker"
+  s.summary      = "Library for images picker, support multiple selection"
   s.homepage     = "https://github.com/sebarina/BCUIImagePicker"
   s.license      = { :type => "MIT", :file => "LICENSE" }
 

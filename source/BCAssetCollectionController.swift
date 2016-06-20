@@ -87,7 +87,13 @@ public class BCAssetCollectionController: UIViewController, UICollectionViewDele
         }
         let data : PHAsset = assets[indexPath.row]
         
-        imageView?.loadImageFromAsset(data)
+//        imageView?.loadImageFromAsset(data)
+        let scale = UIScreen.mainScreen().scale
+        PHImageManager.defaultManager().requestImageForAsset(data, targetSize: CGSizeMake(cellWidth*scale, cellWidth*scale), contentMode: .AspectFill , options: nil) { ( image, info) in
+            imageView?.image = image
+    
+            
+        }
         
         if cell.viewWithTag(101) == nil {
             let tempView = UIView(frame: CGRectMake(0,0,cellWidth,cellWidth))
