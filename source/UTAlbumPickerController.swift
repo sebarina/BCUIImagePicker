@@ -37,6 +37,7 @@ public class BCAlbumPickerController: UIViewController, UITableViewDataSource, U
     }
     
     func prepareAlbums() {
+        assetCollections.removeAll(keepCapacity: false)
         let option = PHFetchOptions()
         option.predicate = NSPredicate(format: "estimatedAssetCount > 0")
         let result = PHAssetCollection.fetchAssetCollectionsWithType(.Album, subtype: .Any, options: option)
@@ -118,7 +119,7 @@ public class BCAlbumPickerController: UIViewController, UITableViewDataSource, U
             label?.text = "\(groupName) (\(collection.estimatedAssetCount))"
         }
         
-        if let asset = result.firstObject as? PHAsset {
+        if let asset = result.lastObject as? PHAsset {
 //            cellImageView?.loadImageFromAsset(asset)
             let scale = UIScreen.mainScreen().scale
             PHImageManager.defaultManager().requestImageForAsset(asset, targetSize: CGSizeMake(80*scale, 80*scale), contentMode: .AspectFill , options: nil) { ( image, info) in
