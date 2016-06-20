@@ -164,7 +164,7 @@ public class BCAssetCollectionController: UIViewController, UICollectionViewDele
                 selectedAssets.append(assets[indexPath.row])
             } else {
                 UIAlertView(title: "",
-                            message: "你你最多只能选择\(maximumNumber)张照片",
+                            message: "你最多只能选择\(maximumNumber)张照片",
                             delegate: nil,
                             cancelButtonTitle: "我知道了").show()
                 

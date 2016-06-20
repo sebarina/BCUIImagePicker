@@ -28,6 +28,7 @@ public class BCAlbumPickerController: UIViewController, UITableViewDataSource, U
         tableView?.tableFooterView = UIView()
         view.addSubview(tableView!)
         performSelectorInBackground(#selector(self.prepareAlbums), withObject: nil)
+        PHPhotoLibrary.sharedPhotoLibrary().registerChangeObserver(self)
         
     }
     
@@ -46,6 +47,19 @@ public class BCAlbumPickerController: UIViewController, UITableViewDataSource, U
                 self.assetCollections.append(album)
             }
         })
+        PHAssetCollection.fetchAssetCollectionsWithType(.SmartAlbum, subtype: .SmartAlbumRecentlyAdded, options: nil).enumerateObjectsUsingBlock({ (collection, index, error) in
+            if let album = collection as? PHAssetCollection {
+                self.assetCollections.append(album)
+            }
+        })
+        
+        if #available(iOS 9.0, *) {
+            PHAssetCollection.fetchAssetCollectionsWithType(.SmartAlbum, subtype: .SmartAlbumScreenshots, options: nil).enumerateObjectsUsingBlock({ (collection, index, error) in
+                if let album = collection as? PHAssetCollection {
+                    self.assetCollections.append(album)
+                }
+            })
+        } 
         
         dispatch_async(dispatch_get_main_queue()) { 
             self.tableView?.reloadData()
@@ -136,4 +150,10 @@ public class BCAlbumPickerController: UIViewController, UITableViewDataSource, U
     }
     
   
+}
+
+extension BCAlbumPickerController : PHPhotoLibraryChangeObserver {
+    public func photoLibraryDidChange(changeInstance: PHChange) {
+        prepareAlbums()
+    }
 }
