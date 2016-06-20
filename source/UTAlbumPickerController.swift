@@ -32,6 +32,10 @@ public class BCAlbumPickerController: UIViewController, UITableViewDataSource, U
         
     }
     
+    deinit {
+        PHPhotoLibrary.sharedPhotoLibrary().unregisterChangeObserver(self)
+    }
+    
     func prepareAlbums() {
         let option = PHFetchOptions()
         option.predicate = NSPredicate(format: "estimatedAssetCount > 0")
