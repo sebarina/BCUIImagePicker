@@ -40,10 +40,11 @@ class ViewController: UIViewController, BCImagePickerControllerDelegate {
     func didFinishedPickImages(picker: BCImagePickerController, selectedAssets: [PHAsset]) {
         for i in 0 ..< selectedAssets.count {
             let asset = selectedAssets[i]
-            let scale = UIScreen.mainScreen().scale
-            PHImageManager.defaultManager().requestImageForAsset(asset, targetSize: CGSizeMake(scale*80, scale*80), contentMode: .AspectFill, options: nil, resultHandler: { [weak self](image, info) in
-                self?.images[i].image = image
-            })
+            ImageUtil.sharedInstance.loadImage(asset, imageView: images[i])
+//            let scale = UIScreen.mainScreen().scale
+//            PHImageManager.defaultManager().requestImageForAsset(asset, targetSize: CGSizeMake(scale*80, scale*80), contentMode: .AspectFill, options: nil, resultHandler: { [weak self](image, info) in
+//                self?.images[i].image = image
+//            })
             
         }
         

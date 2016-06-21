@@ -13,6 +13,7 @@ public class BCAssetCollectionController: UIViewController, UICollectionViewDele
     
     var collectionView : UICollectionView?
     var assetCollection : PHAssetCollection?
+    let cachingImageManager = PHCachingImageManager()
     var assets : [PHAsset] = []
   
     var maximumNumber : Int = 0
@@ -70,6 +71,11 @@ public class BCAssetCollectionController: UIViewController, UICollectionViewDele
                 self.cellSelected.append(false)
             }
         }
+//        cachingImageManager.stopCachingImagesForAllAssets()
+//        let scale = UIScreen.mainScreen().scale
+//        cachingImageManager.startCachingImagesForAssets(assets, targetSize: CGSizeMake(cellWidth*scale, cellWidth*scale), contentMode: .AspectFill, options: nil)
+        
+        
         dispatch_async(dispatch_get_main_queue()) { 
             self.collectionView?.reloadData()
         }
@@ -86,14 +92,20 @@ public class BCAssetCollectionController: UIViewController, UICollectionViewDele
             cell.contentView.addSubview(imageView!)
         }
         let data : PHAsset = assets[indexPath.row]
+        ImageUtil.sharedInstance.loadImage(data, imageView: imageView!)
+//        if cell.tag != 0 {
+//            PHImageManager.defaultManager().cancelImageRequest(PHImageRequestID(cell.tag))
+//            
+//        }
+        
         
 //        imageView?.loadImageFromAsset(data)
-        let scale = UIScreen.mainScreen().scale
-        PHImageManager.defaultManager().requestImageForAsset(data, targetSize: CGSizeMake(cellWidth*scale, cellWidth*scale), contentMode: .AspectFill , options: nil) { ( image, info) in
-            imageView?.image = image
-    
-            
-        }
+//        let scale = UIScreen.mainScreen().scale
+//        cell.tag = Int(PHImageManager.defaultManager().requestImageForAsset(data, targetSize: CGSizeMake(cellWidth*scale, cellWidth*scale), contentMode: .AspectFill , options: nil) { ( image, info) in
+//            imageView?.image = image
+//    
+//            
+//        })
         
         if cell.viewWithTag(101) == nil {
             let tempView = UIView(frame: CGRectMake(0,0,cellWidth,cellWidth))

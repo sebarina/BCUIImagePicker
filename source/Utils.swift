@@ -9,35 +9,29 @@
 import Foundation
 import PhotosUI
 
-let _mutableRequestIDKey = malloc(4)
-
-extension UIImageView {
-    private var loadSession: PHImageRequestID? {
-        get {
-            return objc_getAssociatedObject(self, _mutableRequestIDKey) as? PHImageRequestID
-        }
-        set {
-            objc_setAssociatedObject(self, _mutableRequestIDKey, newValue as? AnyObject, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-        }
-    }
-    func loadImageFromAsset(asset: PHAsset) {
-        if loadSession != nil {
-            PHImageManager.defaultManager().cancelImageRequest(loadSession!)
+class ImageUtil {
+    static var sharedInstance = ImageUtil()
+    private var operationQueue : [Int: PHImageRequestID] = [:]
+    
+    func loadImage(asset: PHAsset, imageView: UIImageView) {
+        if operationQueue[imageView.hash] != nil {
+            PHImageManager.defaultManager().cancelImageRequest(operationQueue[imageView.hash]!)
         }
         let scale = UIScreen.mainScreen().scale
         
         var mode : PHImageContentMode
-        switch contentMode {
+        switch imageView.contentMode {
         case .ScaleAspectFit:
             mode = PHImageContentMode.AspectFit
         default:
             mode = PHImageContentMode.AspectFill
         }
         
-        loadSession = PHImageManager.defaultManager().requestImageForAsset(asset, targetSize: CGSizeMake(frame.width*scale, frame.height*scale), contentMode: mode , options: nil) { [weak self]( data, info) in
-            self?.image = data
-            self?.loadSession = nil
+        let loadSession = PHImageManager.defaultManager().requestImageForAsset(asset, targetSize: CGSizeMake(imageView.frame.width*scale, imageView.frame.height*scale), contentMode: mode , options: nil) { ( data, info) in
+            imageView.image = data
             
         }
+        operationQueue[imageView.hash] = loadSession
+        
     }
 }
