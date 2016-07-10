@@ -20,4 +20,8 @@ public struct BCImagePickerAppearance {
     /// 图片选中时的图片
     public var imageSelectedIcon : UIImage! = UIImage(named: "icon_checked")
     
+    public init() {
+        
+    }
+    
 }
